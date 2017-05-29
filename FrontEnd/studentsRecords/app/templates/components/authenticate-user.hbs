@@ -1,0 +1,43 @@
+<div class = "loginPage">
+  <div class = "ui one column center aligned grid">
+    <div class="column six wide form-holder">
+      {{#if isPasswordChanging}}
+        <h3 class="ui center aligned header form-head">Please change your password and login again.</h3>
+        <div class="ui form">
+          <div class="field">
+            {{input value=firstPassword  type="password" placeholder="Enter new password"}}
+          </div>
+          <div class="field">
+            {{input value=secondPassword  type="password" placeholder="Reenter new password"}}
+          </div>
+          <div class="field">
+            <button class = "ui button large fluid cstmLBlue" onclick = {{action 'save'}}>
+              Save
+            </button>
+          </div>
+        </div>
+      {{else}}
+            <h2 class="ui center aligned header form-head">WE Adjudication</h2>
+            <form {{action 'login' on ="submit"}}>
+              <div class="ui form">
+                <div class="field">
+                  {{input value=name  type="text" placeholder="username"}}
+                </div>
+                <div class="field">
+                  {{input value=password  type="password" placeholder="password"}}
+                </div>
+                <div class="field">
+                  <button class="ui button large fluid green" {{action 'login'}}>
+                    Log In
+                  </button>
+                </div>
+                <div class = "ui form error">
+                  <div id = "err"> {{errorMessage}}</div>
+                </div>
+              </div>
+            </form>
+      {{/if}}
+</div>
+</div>
+</div>
+

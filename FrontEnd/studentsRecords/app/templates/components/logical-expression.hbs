@@ -1,0 +1,95 @@
+<div class = "ui {{if (eq level 0) 'medium inverted' 'small'}} header" style = "padding-bottom:2%;">
+  For 
+  {{#ui-dropdown class = "selection" selected = logLink onChange = (action (mut logLink))}}
+  <div class = "default text">logical link</div>
+  <i class = "dropdown icon"></i>
+  <div class = "menu">
+    {{#each logLinks as |logLink|}}
+      <div class = "item" data-value = {{logLink.id}}>
+        {{logLink.text}}
+      </div>
+    {{/each}}
+  </div>
+  {{/ui-dropdown}}
+  of the following:
+</div>
+
+<div class = "contents logicalExpressionPg">
+  <div id = "{{concat "logicalExp" level}}">
+    <div class = "ui form">
+      <div style = "{{if (eq level 0) 'padding: 2px; background-color:rgba(60,179,113,0.3); border-radius: 10px;' ''}}">
+        {{#each booleanExps as |boolExp index|}}
+          <div class = "fields">
+            <div class = "fourteen wide field">
+              {{boolean-expression boolId = index currentField = boolExp.field currentOpr = boolExp.opr currentVal = boolExp.val isReadOnly = true}}
+            </div>
+            <div class = "two wide field">
+              <button class="ui inverted red icon button" {{action 'destroyBoolExp' boolExp}}>
+                <i class="square minus icon"></i>
+              </button>
+            </div>
+          </div>
+        {{/each}}
+        {{#each logicalExpressionsArr as |logExp|}}
+          <div class = "fields">
+            <div class = "fourteen wide field">
+              <div class = "ui purple segment">
+                {{logical-expression rule = null level = (inline-math level '+' 1) objectID = logExp.id}}
+              </div>
+            </div>
+            <div class = "two wide field">
+              <button class = "ui inverted red icon button" {{action 'destroyLogExp' logExp}}>
+                <i class = "square minus icon"></i>
+              </button>
+            </div>
+          </div>
+        {{/each}}
+      </div>
+      {{#if creatingNewLogExp}}
+        <div class = "fields">
+          <div class = "fourteen wide field">
+            <div class = "ui purple segment">
+              {{logical-expression rule = null level = (inline-math level '+' 1) objectID = currentChildID }}
+            </div>
+          </div>
+          <div class = "two wide field">
+            <button class = "ui inverted green icon button" {{action 'createLogExp'}}>
+              <i class = "square add icon"></i>
+            </button>
+          </div>
+        </div>
+      {{/if}}
+      {{#each extraBoolExp as |newExp|}}
+        <div class = "fields">
+          <div class = "fourteen wide field">
+            {{boolean-expression boolId = count currentField = newExp.field currentOpr = newExp.opr currentVal = newExp.val}}
+          </div>
+          <div class = "two wide field">
+            <button class = "ui inverted green icon button" {{action 'addBoolExp' newExp}}>
+              <i class = "square add icon"></i>
+            </button>
+            <button class = "ui inverted cstmLBlue icon button" {{action 'toggleNewLogExp'}}>
+              <i class = "browser icon"></i>
+            </button>
+          </div>
+        </div>
+      {{/each}}
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

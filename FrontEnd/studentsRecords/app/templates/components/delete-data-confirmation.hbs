@@ -1,0 +1,18 @@
+<div class="ui modal centered grid">
+  <div class="header">
+    <h2>Are you sure you want to delete <span style = "color: red;">all current data</span> to reimport?</h2>
+  </div>
+  <div class="content">
+    <p>
+      All existing data must be removed before new data is imported. Removing old data is <strong>irreversible</strong>, so be sure you are ready before proceeding.
+    </p>
+  </div>
+  <div class="actions">
+    <div class="ui red inverted button" {{action "deleteAllData"}}>
+    	Delete All Data
+    </div>
+    <div class="ui inverted cstmTurq button" {{action "cancel"}}>
+    	Cancel
+    </div>
+  </div>
+</div>

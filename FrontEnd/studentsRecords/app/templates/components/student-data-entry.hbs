@@ -1,0 +1,555 @@
+<div class = "ui center aligned padded grid container">
+  <div class = "ui basic segment">
+    <div class = "ui huge header">
+      Student Records
+    </div>
+  </div>
+</div>
+{{#if showMenuBar}}
+  <!-- Show the menu bar-->
+  <div class="ui stackable container inverted eight item menu">
+    <a class="item save" {{action 'saveStudent'}}>
+      <i class="save icon"></i> Save
+    </a>
+    <a class="item undo" {{action 'undoSave'}}>
+      <i class="undo icon"></i> Undo
+    </a>
+    <a class="item" {{action 'deleteCurrentStudent'}}>
+      <i class = "trash icon"></i> Delete
+    </a>
+    <a class="item" {{action 'firstStudent'}}>
+      <i class="step backward icon"></i> First
+    </a>
+    <a class="item" {{action 'previousStudent'}}>
+      <i class="arrow left icon"></i> Previous
+    </a>
+    <a class="item" {{action 'nextStudent'}}>
+      <i class="arrow right icon"></i> Next
+    </a>
+    <a class="item" {{action 'lastStudent'}}>
+      <i class="step forward icon"></i> Last
+    </a>
+    <a class="item" {{action 'allStudents'}}>
+      <i class="content icon"></i> All Records
+    </a>
+  </div>
+{{/if}}
+
+<!-- Delete confirmation popups -->
+{{#if showDeleteConfirmation}} 
+  {{delete-student showAllStudents = showAllStudents showMenuBar = showMenuBar student = currentStudent showWindow = showDeleteConfirmation total = totalStudents}}
+{{else if showAdvancedStandingDeleteConfirmation}}
+  {{delete-advanced-standing advancedStanding = currentAdvancedStanding showWindow = showAdvancedStandingDeleteConfirmation}}
+{{else if showScholarshipDeleteConfirmation}}
+  {{delete-scholarship scholarship = currentScholarship showWindow = showScholarshipDeleteConfirmation}}
+{{/if}}
+
+<!-- other popups -->
+
+<!-- Other non-popup screens -->
+{{#if showAllStudents}}
+<!-- Note that offset is an "in" and "out" parameter !-->
+  {{all-students currentIndex = currentIndex currentStudent = currentStudent showAllStudents = showAllStudents showMenuBar = showMenuBar offset = offset limit = limit studentsRecords = studentsRecords totalPages = totalPages pageNumber = pageNumber message = studentDataMessage totalStudents = totalStudents filter = filter changeOffset = (action 'changeOffset')}}
+{{else}}
+<div class = "ui two column centered relaxed grid">
+  <div class = "three wide column">
+    <!-- Show data entry form -->
+    <div class="ui secondary vertical fluid pointing menu">
+      <div style="cursor: pointer;" class="active item" data-tab="basics">Basic Info</div>
+      <div style="cursor: pointer;" class="item" data-tab="program">Program Record</div>
+      <div style="cursor: pointer;" class="item" data-tab="awards">Scholarships and Awards</div>
+      <div style="cursor: pointer;" class="item" data-tab="advanced">Advanced Standings</div>
+      <div style="cursor: pointer;" class="item" data-tab="hsinfo">High School Info</div>
+      <div style="cursor: pointer;" class="item" data-tab="adjudication">Adjudications</div>
+    </div>
+  </div>
+  <div class = "twelve wide column">
+    {{#if studentNotLoaded}}
+      <div class = "dimmable" style="min-height:300px">
+        <div class = "ui active inverted dimmer">
+          <div class = "ui text loader">{{studentDataMessage}}</div>
+        </div>
+      </div>
+    {{else}}
+    <div class="ui tab segment active" data-tab="basics" style = "margin-top:0">
+      <!-- student basic information !-->
+      <h2>Basic Information</h2>
+      <div class="ui sixteen wide middle aligned center aligned grid studentInfo">
+        <div class="ui five wide column">
+          <div class="ui relaxed items form">
+            <div class="item inline field">
+              <label>Student Number</label>
+              {{input type="text"  value = currentStudent.studentNumber readonly=true}}
+            </div>
+            <div class="item inline field">
+              <label>First Name</label>
+              {{input type="text"  value = currentStudent.firstName focus-in = (action "textFocusIn" "firstName") focus-out = (action "onFocusOut") change = (action "onFieldChange")}}
+            </div>
+            <div class="item inline field">
+              <label>Last Name</label>
+              {{input type="text" value = currentStudent.lastName focus-in = (action "textFocusIn" "lastName") focus-out = (action "onFocusOut") change = (action "onFieldChange")}}
+            </div>
+          </div> 
+        </div>           
+        <div class="ui five wide column">
+          <div class="ui relaxed items form">
+            <div class="item inline field">
+              <label>Gender</label>
+              <select id="ddlGender" onchange={{action 'selectGender' value="target.value"}} onclick = {{action 'genderFocusIn'}} onblur = {{action 'onFocusOut'}}>
+                {{#each genderModel as |genderChoice|}}
+                <option value={{genderChoice.id}} selected={{eq currentStudent.gender.id genderChoice.id}}>{{genderChoice.name}}</option>
+                {{/each}}
+              </select>
+            </div>
+            <div class="item inline field">
+              <label>Date of Birth</label>
+              <input value={{selectedDate}} type="date" onchange={{action 'assignDate' value="target.value"}} onFocus = {{action 'dobFocusIn'}} onBlur = {{action 'onFocusOut'}}>
+            </div>
+            <div class="item inline field">
+              <label>Residency</label>
+              <select id="ddlResidency" onchange={{action 'selectResidency' value="target.value" }} onclick = {{action 'residencyFocusIn'}} onblur = {{action 'onFocusOut'}}>
+                {{#each residencyModel as |residencyChoice|}}
+                  <option value={{residencyChoice.id}} selected={{eq currentStudent.resInfo.id residencyChoice.id}}>{{residencyChoice.name}} </option>
+                {{/each}}
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class=" ui items five wide column ">
+          <img src={{studentPhoto}} class="item">
+        </div>
+                  
+        <div class="ui left aligned sixteen grid form">
+          <div class="row">
+            <div class="item inline eight wide column field">
+              <label>Basis of Admission</label> {{textarea rows="4"  type="text" value = currentStudent.basisOfAdmission focus-in = (action "textFocusIn" "basisOfAdmission") focus-out = (action "onFocusOut") change = (action "onFieldChange")}}
+            </div>
+            <div class="item inline  eight wide column field">
+              <label>Admission Average</label> {{textarea rows="4"  type="text" value = currentStudent.admissionAverage focus-in = (action "textFocusIn" "admissionAverage") focus-out = (action "onFocusOut") change = (action "onFieldChange")}}
+            </div>
+          </div>
+          <div class="item inline sixteen wide column field">
+            <label>Admission Comments</label> {{textarea rows="4" type="text" value = currentStudent.admissionComments focus-in = (action "textFocusIn" "admissionComments") focus-out = (action "onFocusOut") change = (action "onFieldChange")}}
+          </div>
+          <div class="item inline sixteen wide column field">
+            <label>Registration Comments</label> {{textarea rows="4" type="text" value = currentStudent.registrationComments focus-in = (action "textFocusIn" "registrationComments") focus-out = (action "onFocusOut") change = (action "onFieldChange")}}
+          </div>   
+        </div>    
+      </div>
+    </div>
+
+    <div class="ui tab segment" data-tab="program" style = "margin-top:0">
+      <h2>Program Records</h2>
+      <h4> {{currentStudent.firstName}} {{currentStudent.lastName}} - {{currentStudent.studentNumber}}</h4>
+      <div class="ui grid">
+        <div class="eight wide column">
+          {{#ui-dropdown class="fluid selection" selected=termIndex onChange=(action (mut termIndex))}}
+            <i class="dropdown icon"></i>
+            <div class="default text">Select Term</div>
+            <div class="menu">
+              {{#each currentStudent.terms as |semester index|}}
+                <div class="item"   data-value= "{{semester.termCode.id}}" >
+                  {{semester.termCode.name}}
+                </div>
+              {{/each}}
+            </div>
+          {{/ui-dropdown}}
+        </div>
+        <div class="four wide column">
+        {{#ui-dropdown id="addingNewStudentTerm" class="labeled selection icon top right inverted green pointing button" selected = selectedNewTerm onChange=(action 'addNewTermToStudent')}}
+          <i class="plus icon"></i>
+          Add New Term To Student
+          <div class="menu">
+            {{#each studentUnselectedTermCodes as |nonTerms|}}
+              <div data-value="{{nonTerms.id}}" class="item">
+                {{nonTerms.name}}
+              </div>
+            {{/each}}
+          </div>
+        {{/ui-dropdown}}
+          {{!--<div class="ui inverted green button" {{action 'addNewTermToStudent'}}>
+            Add New Term to {{currentStudent.firstName}}
+          </div>--}}
+        </div>
+      </div>
+      {{#if termIndex}}
+      <h5>Programs</h5>
+      {{/if}}
+      
+      {{#each currentStudent.terms as |term|}}
+        {{#if (eq term.termCode.id termIndex)}}
+          {{#each term.programRecords as |programRecord|}}
+          <table class="ui fixed table">
+            <thead>
+              <tr onclick={{action 'displayProgram' programRecord.name}}>
+                <th>                  
+                  <label>{{programRecord.name}}<i class = "toggleDisplay{{programRecord.name}}" style="color: gray"> (click to show program's plans)</i></label>
+                </th>
+              </tr>
+            </thead>
+            <div id="progInfo{{programRecord.name}}" class="studentProgramInfo" style="display: none">
+              <table class="ui fixed table">
+                <tr class="active">
+                  <td><b>Program Name</b></td>
+                  <td><b>Level</b></td>
+                  <td><b>Load</b></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td><div class="ui fluid input">{{input type="text" value = programRecord.name }}</div></td>
+                  <td><div class="ui fluid input">{{input type="text" value = programRecord.level }}</div></td>
+                  <td><div class="ui fluid input">{{input type="text" value = programRecord.load }}</div></td>
+                  <td colspan="2">                
+                    <div class="ui inverted buttons">
+                      <div class="ui inverted cstmLBlue icon button" {{action "saveProgram" programRecord}}>
+                        Save Program
+                      <i class = "icon save"></i>
+                      </div>
+                      <div class="ui red inverted icon button" {{action "deleteProgram" programRecord}}>
+                        Delete Program
+                        <i class = "icon trash"></i>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              {{#each programRecord.planCodes as |planCode|}}
+                <tr class="active">
+                  <td colspan="2"><b>Plan Name</b></td>
+                  <td colspan="3"></td>
+                </tr>
+                <tr>
+                  <td colspan="2"><div class="ui fluid input">{{input type="text" value = planCode.name }}</div></td>
+                  <td></td>
+                  <td colspan="2">                
+                    <div class="ui inverted buttons">
+                      <div class="ui inverted cstmLBlue icon button" {{action "savePlan" planCode}}>
+                        Save Plan
+                      <i class = "icon save"></i>
+                      </div>
+                      <div class="ui red inverted icon button" {{action "deletePlan" planCode}}>
+                        Delete Plan
+                        <i class = "icon trash"></i>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              {{/each}}
+              <tr>
+                <td colspan="2"><div class="ui fluid input">{{input type="text" value = newPlanName placeholder="Plan Name" }}</div></td>
+                <td></td>
+                <td colspan="2">
+                  <div class="ui green inverted button" {{action "addNewPlan" programRecord}}>Add New Plan</div>
+                </td>
+              </tr>
+              </table>
+            </div>            
+          </table>
+          {{/each}}          
+          <table class="ui fixed table">
+            <thead>
+              <tr>
+                <th colspan="5">Add New Program</th>
+              </tr>
+            </thead>
+            <tr>
+                <td><div class="ui fluid input">{{input type="text" value = newProgramName placeholder="Program Name" }}</div></td>
+                <td><div class="ui fluid input">{{input type="Number" value = newProgramLevel placeholder="Program Level" }}</div></td>
+                <td><div class="ui fluid input">{{input type="text" value = newProgramLoad placeholder="Program Load" }}</div></td>
+              <td colspan="2">
+                <div class="ui green inverted button" {{action "addNewProgram" term.id}}>Add New Program</div>
+              </td>
+            </tr>
+          </table>
+        {{/if}}
+      {{/each}}
+
+      {{#if termIndex}}
+      <h5>Courses</h5>
+      <table class="ui fixed table">
+        <thead>
+          <tr>
+            <th>Course</th>
+            <th><!--spacer--></th>
+            <th>Course Code</th>
+            <th>Grade</th>
+            <th>Note</th>
+            <th></th>
+          </tr>
+        </thead>
+        {{#each currentStudent.terms as |term|}}
+        {{#if (eq term.termCode.id termIndex)}}
+          {{#each term.grades as |grade|}}
+            <tr>
+              <td colspan="2">{{grade.courseCode.name}}</td>
+              <td>{{grade.courseCode.courseLetter}}{{grade.courseCode.courseNumber}}</td>
+              <td><div class="ui fluid input">{{input type="text" value = grade.mark }}</div></td>
+              <td>{{grade.note}}</td>
+              <td>
+                <div class="ui inverted buttons">
+                  <div class="ui inverted cstmLBlue icon button" {{action "saveGrade" grade}}>
+                  <i class = "icon save"></i>
+                  </div>
+                  <div class="ui red inverted icon button" {{action "deleteGrade" grade}}>
+                    <i class = "icon trash"></i>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          {{/each}}
+        {{/if}}
+        {{/each}}
+          <tr>
+            <td colspan="3" style="overflow: visible;">
+              <div class="ui fluid input">
+                {{#ui-dropdown class="fluid selection" selected=newCourseCodeID onChange=(action (mut newCourseCodeID))}}
+                  <i class="dropdown icon"></i>
+                  <div class="default text">Select Course</div>
+                  <div class="menu">
+                    {{#each courseCodeModel as |courseCode|}}
+                      <div class="item"   data-value= {{courseCode.id}} >
+                        {{courseCode.courseLetter}}{{courseCode.courseNumber}} 
+                      </div>
+                    {{/each}}
+                  </div>
+                {{/ui-dropdown}}
+              </div>
+            </td>          
+            <td><div class="ui fluid input">{{input type="text" value = newCourseGradeInput placeholder="Grade" }}</div></td>
+            <td><div class="ui fluid input">{{input type="text" value = newCourseGradeNote placeholder="Note" }}</div></td>
+            <td>
+                <div class="ui green inverted button" {{action "addNewGrade"}}>Add Grade</div>
+            </td>
+          </tr>
+      </table>      
+      {{/if}}
+    </div>
+
+    <div class="ui tab segment" data-tab="advanced" style = "margin-top:0">
+      <h2>Advanced Standings</h2>
+      <h4> {{currentStudent.firstName}} {{currentStudent.lastName}} - {{currentStudent.studentNumber}}</h4>
+
+      <table class="ui table">
+        <thead>
+          <tr>
+            <th>Course</th>
+            <th>
+              <!--spacer-->Description
+            </th>
+            <th>
+              <!--spacer-->Units
+            </th>
+            <th><!--spacer-->Grade</th>
+            <th><!--spacer-->Source</th>
+            <th><!--spacer--></th>
+          </tr>
+        </thead>
+
+        {{#each currentStudent.advancedStandings as |advancedStanding|}}
+           <tr>
+              <td>
+                  <div class="ui fluid input">
+                      {{input type="text" value = advancedStanding.course }}
+                  </div>
+              </td>
+              <td>
+                  <div class="ui fluid input">
+                      {{input type="text" value = advancedStanding.description}}
+                  </div>
+              </td>
+              <td>
+                  <div class="ui fluid input">
+                      {{input type="text" value = advancedStanding.units}}
+                  </div>
+              </td>
+              <td>
+                  <div class="ui fluid input">
+                      {{input type="text" value = advancedStanding.grade}}
+                  </div>
+              </td>
+              <td>
+                  <div class="ui fluid input">
+                      {{input type="text" value = advancedStanding.from}}
+                  </div>
+              </td>
+              <td>
+                  <div class="ui inverted buttons">
+                      <button class="ui inverted cstmLBlue button" {{action "saveAS" advancedStanding}}>Save</button>
+                      <div class="divider"/>
+                      <button class="ui red inverted button" {{action "deleteAS" advancedStanding}}>Delete</button>
+                  </div> 
+              </td>
+          </tr>
+        {{/each}}
+        <tr>
+          <td>
+            <div class="ui fluid input">
+              {{input type="text" value = newAdvancedStandingCourse placeholder="Course"}}
+            </div>
+          </td>
+          <td>
+            <div class="ui fluid input">
+              {{input type="text" value = newAdvancedStandingDescription placeholder="Description"}}
+              </div>
+          </td>
+          <td>
+            <div class="ui fluid input">
+              {{input type="text" value = newAdvancedStandingUnits placeholder="Units"}}
+              </div>
+            </td>
+            <td>
+            <div class="ui fluid input">
+              {{input type="text" value = newAdvancedStandingGrade placeholder="Grade"}}
+              </div>
+            </td>
+            <td>
+            <div class="ui fluid input">
+              {{input type="text" value = newAdvancedStandingFrom placeholder="Source"}}
+              </div>
+            </td>
+          <td>
+            <button class="ui inverted green button" {{action "addAS"}}> 
+                      Add &nbsp; <i class="add square icon"></i>
+                      </button>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+
+
+    <div class="ui tab segment" data-tab="hsinfo" style = "margin-top:0">
+      {{student-high-school-tab currentStudent = currentStudent store = store}}
+    </div>
+
+    <div class="ui tab segment" data-tab="adjudication" style = "margin-top:0">
+      {{student-adjudication-tab currentStudent = currentStudent store = store selectedTermCode = termIndex}}
+    </div>
+
+
+    <div class="ui tab segment" data-tab="awards" style = "margin-top:0">
+      <h2>Scholarships and Awards</h2>
+      <h4> {{currentStudent.firstName}} {{currentStudent.lastName}} - {{currentStudent.studentNumber}}</h4>
+      <table class="ui fixed table">
+        <thead>
+          <tr>
+              <th>Scholarship/Award Name</th>
+              <th><!--spacer--></th>
+              <th><!--spacer--></th>  
+          </tr>
+          </thead>
+          {{#each currentStudent.scholarships as |scholarship|}}
+          <tr>
+              <td colspan="2">
+                  <div class="ui fluid input">
+                      {{input type="text" value = scholarship.note}}
+                  </div>
+              </td>
+              <td>
+                  <div class="ui inverted buttons">
+                      <button class="ui inverted cstmLBlue button" {{action "saveScholarship" scholarship}}>Save</button>
+                      <div class="divider"/>
+                      <button class="ui red inverted button" {{action "deleteScholarship" scholarship}}>Delete</button>
+                  </div> 
+              </td>
+              
+          </tr>
+      {{/each}}
+      <tr>
+              <td colspan = "2">
+                  <div class="ui fluid input">
+                      {{input type="text" value = newScholarshipName placeholder="Scholarship/Award Name"}}
+                  </div>
+              </td>
+              <td>
+                  <button class="ui inverted green button" {{action "addScholarship"}}> 
+                  Add &nbsp; <i class="add square icon"></i>
+                  </button>
+              </td>
+        </tr>
+      </table>
+    </div>
+  {{/if}}
+  </div>
+</div>
+{{/if}}
+<div style="margin: auto; width: 50%;">
+  <div class="ui fluid pagination nine item menu">
+    {{#if (inline-compare pageNumber '<' 5)}}
+      <div class="disabled item"></div>
+    {{/if}}
+    {{#if (inline-compare pageNumber '>' 3)}}
+      <a class="item" {{action "switchPage" 1}}>
+        1
+      </a> 
+    {{else}}
+      <div class="disabled item"></div>
+    {{/if}} 
+    {{#if (inline-compare pageNumber '>' 5)}}
+      <div class="disabled item">
+        ...
+      </div>
+    {{else}} 
+      {{#if (inline-compare pageNumber '===' 5)}}
+      <a class="item" {{action "switchPage" 2}}>
+        2
+      </a> 
+      {{/if}} 
+    {{/if}}
+    {{#if (inline-compare pageNumber '>' 2)}}
+      <a class="item" {{action "switchPage" (inline-math pageNumber '-' 2)}}>
+        {{inline-math pageNumber '-' 2}}
+      </a> 
+    {{else}}
+      <div class="disabled item"></div>
+    {{/if}}
+    {{#if (inline-compare pageNumber '>' 1)}}
+      <a class="item" {{action "switchPage" (inline-math pageNumber '-' 1)}}>
+        {{inline-math pageNumber '-' 1}}
+      </a>
+    {{else}}
+      <div class="disabled item"></div>
+    {{/if}}
+
+    <a class="active item">
+      {{pageNumber}}
+    </a> 
+
+    {{#if (inline-compare pageNumber '<' totalPages)}}
+      <a class="item" {{action "switchPage" (inline-math pageNumber '+ ' 1)}}>
+        {{inline-math pageNumber '+ ' 1}}
+      </a>
+    {{else}}
+      <div class="disabled item"></div>
+    {{/if}}
+    {{#if (inline-compare pageNumber '<' (inline-math totalPages '- ' 1))}}
+      <a class="item" {{action "switchPage" (inline-math pageNumber '+ ' 2)}}>
+        {{inline-math pageNumber '+ ' 2}}
+      </a>
+    {{else}}
+      <div class="disabled item"></div>
+    {{/if}}
+    {{#if (inline-compare pageNumber '<' (inline-math totalPages '- ' 4))}}
+      <div class="disabled item">
+        ...
+      </div>
+    {{else}}
+      {{#if (inline-compare pageNumber '===' (inline-math totalPages ' - ' 4))}}
+        <a class="item" {{action "switchPage" (inline-math totalPages '- ' 1 )}}>
+          {{inline-math totalPages '- ' 1 }}
+        </a>
+      {{/if}}
+    {{/if}}
+    {{#if (inline-compare pageNumber '<' (inline-math totalPages '- ' 2))}}
+      <a class="item" {{action "switchPage" totalPages}}>
+        {{totalPages}}
+      </a>
+    {{else}}
+      <div class="disabled item"></div>
+    {{/if}}
+    {{#if (inline-compare pageNumber '>' (inline-math totalPages '-' 4))}}
+        <div class="disabled item"></div>
+    {{/if}}
+  </div>
+</div>

@@ -1,0 +1,54 @@
+<div class = "ui centered padded grid">
+    <div class = "ui form" style = "padding-top: 20px;">
+        <div class = "ui inline fields">
+            <div class = "inline field">
+        		<h3>
+        			Please choose a term to adjudicate for:
+        		</h3>
+            </div>
+            <div class = "inline field">
+                <select class="ui dropdown" onchange={{action 'selectTerm' value='target.value'}}>
+                    {{#each termCodeModel as |termCode|}}
+                        <option value={{termCode.id}}>{{termCode.name}}</option>
+                    {{/each}}
+                </select>
+            </div>
+            <div class = "inline field">
+				<div class = "ui green button" {{action 'adjudicate'}}>
+					Start Adjudication Process
+				</div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="ui grid">
+	<div class = "row">        
+		<div class="eight wide stretchered column ui segment">
+            <br>
+            <label>Student Information Collection Progress</label>    
+            {{#ui-progress value = parsingProgress progress = parsingProgress total = parsingTotal}}
+                <div class="bar">
+                    <div class="progress"></div>
+                </div>
+            {{/ui-progress}}
+            <br>
+            <label>Student Evaluation Progress</label>    
+            {{#ui-progress value = evaluationProgress progress = evaluationProgress total = evaluationTotal}}
+                <div class="bar">
+                    <div class="progress"></div>
+                </div>
+            {{/ui-progress}}
+            <br>
+		</div>
+		<div class = "eight wide column">
+            <div class="ui segment">
+                <h2 class="ui header">Adjudication Status</h2>
+                {{{adjudicationStatus}}}
+                {{{doneStatus}}}
+            </div>
+            <div class="ui cstmDPurple button disabled" id="btnEditFlagged" {{action 'proceedToFlagged'}}>Review Flagged Students</div>
+            <div class="ui green button disabled" id="btnGenerateReports" {{action 'proceedToReports'}}>Generate Reports</div>
+		</div>
+	</div>
+</div>
+<br>

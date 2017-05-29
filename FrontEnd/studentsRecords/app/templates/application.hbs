@@ -1,0 +1,62 @@
+{{#if oudaAuth.isAuthenticated }}
+<div class = "wrapper">
+  <div class = "appBody ui grid" style="padding-bottom: 55px;">
+      <div class="ui fixed cstmDPurple inverted menu">
+          {{#link-to 'home' class='item'}}
+            <img class="logo" src="/assets/images/UWO Stacked_Rev.png"><b>WE Adjudication</b>
+          {{/link-to}}
+          {{#link-to 'student-records' class='item'}}
+            View Records&nbsp;&nbsp;<i class = "book icon"></i>
+          {{/link-to}}
+          {{#link-to 'adjudication' class='item'}}
+            Create Adjudications & Reports&nbsp;&nbsp;<i class = "law icon"></i>
+          {{/link-to}}
+          {{#link-to 'import-files' class='item'}}
+            Import Files&nbsp;&nbsp;<i class = "download icon"></i>
+          {{/link-to}}
+          {{#link-to 'system-codes' class='item'}}
+            Manage Codes&nbsp;&nbsp;<i class = "code icon"></i>
+          {{/link-to}}
+          <div class = "right menu">
+          {{#if ADM01IsPermitted}}
+            {{#link-to 'admin-portal' class='item'}}
+              Admin Portal&nbsp;&nbsp;<i class = "spy icon"></i>
+            {{/link-to}}
+          {{/if}}
+            {{#link-to 'user' class='item'}}
+              User Account&nbsp;&nbsp;<i class = "user icon"></i>
+            {{/link-to}}
+            <a class='item' {{action 'logout'}}>
+              Logout&nbsp;&nbsp;<i class = "power icon"></i>
+            </a>
+          </div>
+      </div>
+      <div class = "ui basic segment container content" style = "padding-top: 55px; margin-top:50px;">
+      {{outlet}}
+      </div>
+    </div>
+      <div class = "footer">
+        <div class="ui cstmDPurple inverted vertical footer segment">
+          <div class="ui center aligned grid">
+            <div class="four wide column">
+              © Copyright - 
+              {{#link-to 'about-us'}}
+                <span style = "color:white;">
+                  Digital Sloth
+                </span>
+              {{/link-to}}
+              <img class="ui right spaced mini image" src="/assets/images/UWO Stacked_Rev.png">
+            </div>
+          </div>
+        </div>
+      </div>
+</div>
+{{else}}
+<div class = "ui basic segment container" style = "padding-top: 55px;">
+      {{#unless oudaAuth.getName}}
+        {{outlet "login"}}
+      {{/unless}}     
+</div>   
+{{/if}}
+
+

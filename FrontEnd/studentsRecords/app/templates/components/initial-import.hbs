@@ -1,0 +1,224 @@
+<div class = "ui center aligned padded grid container">
+  <div class = "ui basic segment">
+    <div class = "ui huge header">
+      Import Files
+    </div>
+  </div>
+</div>
+
+{{#if showDeleteConfirmation}}
+{{delete-data-confirmation notDONE = showDeleteConfirmation isImporting = importData}}
+{{else if importData}}
+<div class="ui grid">
+	<div class = "row">
+		<div class="column">
+			<div class="ui tiny steps cstmGold">
+				<a id="basic" class="active step item">
+					<i class="minus icon"></i>
+					<div class="content">
+		     			<div class="title" >Basic Information</div>
+		     			<!--Genders, Residencies, Course Codes-->
+		    		</div>
+				</a>
+				<a id="faculty" class="disabled step item">
+					<i class="minus icon"></i>
+					<div class="content">
+		     			<div class="title" >Faculty Information</div>
+		     			<!--Faculties, Departments, Program Admins-->
+		    		</div>
+				</a>
+				<a id="student" class="disabled step item">
+					<i class="minus icon"></i>
+					<div class="content">
+		     			<div class="title" >Student Information</div>
+		     			<!--Students, Awards & Scholarships, Advanced Standings, RC, BA, AA, AC-->
+		    		</div>
+				</a>
+				<a id="highschool" class="disabled step item">
+					<i class="minus icon"></i>
+					<div class="content">
+		     			<div class="title" >High School Information</div>
+		     			<!--High Schools, High School Course Information-->
+		    		</div>
+				</a>
+				<a id="undergraduate" class="disabled step item">
+					<i class="minus icon"></i>
+					<div class="content">
+		     			<div class="title" >Program Information</div>
+		     			<!--Undergraduate Record Plans, Undergraduate Record Courses-->
+		    		</div>
+				</a>			
+			</div>
+		</div>
+	</div>
+	<div class = "centered row">
+		<div class="ten wide stretchered column ui basic vertical ordered steps cstmGold">
+			{{#if index1}}
+				{{#each importUndergrad as |feature index|}}
+					<div class = "ui segment step " id = {{feature.code}}>
+						<div class = "content">
+							<h3> {{feature.name}} </h3>
+							<p> {{{feature.description}}}</p>
+							<input type = "file" id = {{concat "newFile" index}}>
+							<br>
+							<br>
+						</div>
+					</div>
+					<div class = "row">
+						{{#if importInProgress}}
+							{{#ui-progress value = feature.progress progress = feature.progress total = feature.total}}
+								<div class="bar">
+								  <div class="progress"></div>
+								</div>
+							{{/ui-progress}}
+						{{/if}}
+					</div>
+				{{/each}}
+				<div class = "ui basic centered middle aligned grid segment">
+					<button id = "btnImport" class="ui cstmLBlue button" {{action 'import' }}>
+		  				Import Files
+					</button>
+				</div>
+			{{else if index2}}
+				{{#each importHighSchool as |feature index|}}
+					<div class = "ui segment step " id = {{feature.code}}>
+						<div class = "content">
+							<h3> {{feature.name}} </h3>
+							<p> {{{feature.description}}}</p>
+							<input type = "file" id = {{concat "newFile" index}}>
+							<br>
+							<br>
+						</div>
+					</div>
+					<div class = "row">
+						{{#if importInProgress}}
+							{{#ui-progress value = feature.progress progress = feature.progress total = feature.total}}
+								<div class="bar">
+								  <div class="progress"></div>
+								</div>
+							{{/ui-progress}}
+						{{/if}}
+					</div>
+				{{/each}}
+				<div class = "ui basic centered middle aligned grid segment">
+					<button id="btnImport" class="ui cstmLBlue button" {{action 'import' }}>
+		  				Import Files
+					</button>
+				</div>
+			{{else if index3}}
+				{{#each importStudent as |feature index|}}
+					<div class = "ui segment step " id = {{feature.code}}>
+						<div class = "content">
+							<h3> {{feature.name}} </h3>
+							<p> {{{feature.description}}}</p>
+							<input type = "file" id = {{concat "newFile" index}}>
+							<br>
+							<br>
+						</div>
+					</div>
+					<div class = "row">
+						{{#if importInProgress}}
+							{{#ui-progress value = feature.progress progress = feature.progress total = feature.total}}
+								<div class="bar">
+								  <div class="progress"></div>
+								</div>
+							{{/ui-progress}}
+						{{/if}}
+					</div>
+				{{/each}}
+				<div class = "ui basic centered middle aligned grid segment">
+					<button id = "btnImport" class="ui cstmLBlue button" {{action 'import' }}>
+		  				Import Files
+					</button>
+				</div>
+			{{else if index4}}
+				{{#each importFaculty as |feature index|}}
+					<div class = "ui segment step " id = {{feature.code}}>
+						<div class = "content">
+							<h3> {{feature.name}} </h3>
+							<p> {{{feature.description}}}</p>
+							<input type = "file" id = {{concat "newFile" index}}>
+							<br>
+							<br>
+						</div>
+					</div>
+					<div class = "row">
+						{{#if importInProgress}}
+							{{#ui-progress value = feature.progress progress = feature.progress total = feature.total}}
+								<div class="bar">
+								  <div class="progress"></div>
+								</div>
+							{{/ui-progress}}
+						{{/if}}
+					</div>
+				{{/each}}
+				<div class = "ui basic centered middle aligned grid segment">
+					<button id = "btnImport" class="ui cstmLBlue button" {{action 'import' }}>
+		  				Import Files
+					</button>
+				</div>
+			{{else}}
+				{{#each importBasic as |feature index|}}
+					<div class = "ui segment step " id = {{feature.code}}>
+						<div class = "content">
+							<h3> {{feature.name}} </h3>
+							<p> {{{feature.description}}}</p>
+							<input type = "file" id = {{concat "newFile" index}}>
+							<br>
+							<br>
+						</div>
+					</div>
+					<div class = "row">
+						{{#if importInProgress}}
+							{{#ui-progress value = feature.progress progress = feature.progress total = feature.total}}
+								<div class="bar">
+								  <div class="progress"></div>
+								</div>
+							{{/ui-progress}}
+						{{/if}}
+					</div>
+				{{/each}}
+				<div class = "ui basic centered middle aligned grid segment">
+					<button id = "btnImport" class="ui cstmLBlue button" {{action 'import' }}>
+		  				Import Files
+					</button>
+				</div>
+			{{/if}}
+		</div>
+		{{#if importInProgress}}
+			<div class = "six wide column">
+			<div class = "overlay">
+				<div class = "ui segment">
+					<div class = "header"> Importing...</div>
+					{{{fileOutput}}}
+				</div>
+				{{#if (greater-than changingIndex "16")}}
+					{{#link-to 'student-records' id = "btnFinish" class = "ui green button disabled"}}
+						Finish
+					{{/link-to}}
+				{{else}}
+					<button id="btnContinue" class="ui cstmDPurple button disabled" {{action 'continue' }}>
+			  				Continue
+					</button>
+				{{/if}}
+			</div>
+			</div>
+		{{/if}}
+	</div>
+</div>
+{{else}}
+<div class = "ui grid">
+	<div class = "column ui cstmLOrange segment" style = "margin-top:50px;">
+		<p>
+			To import new data, you must delete all old data. This action is irreversible, so be sure you are ready before proceeding.
+		</p>
+		<div class="ui horizontal divider"></div>
+		<div style="width: 50%; margin: auto;">
+			<div class="ui fluid button" {{action 'showEraseDataModal'}}>
+				Import New Data
+			</div>
+		</div>
+	</div>
+</div>
+{{/if}}
+

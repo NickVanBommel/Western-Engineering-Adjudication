@@ -1,0 +1,1066 @@
+<div class = "ui center aligned padded grid container">
+  <div class = "ui basic segment">
+    <div class = "ui huge header">
+      System Codes
+    </div>
+  </div>
+</div>
+
+{{#if showDeleteGenderConfirmation}}
+  {{delete-gender gender = currentGender showWindow = showDeleteGenderConfirmation}}
+{{else if showDeleteResidencyConfirmation}}
+  {{delete-residency residency = currentResidency showWindow = showDeleteResidencyConfirmation}}
+{{else if showCourseCodeDeleteConfirmation}}
+  {{delete-course-code courseCode = currentCourseCode showWindow = showCourseCodeDeleteConfirmation}}
+{{else if showDeleteHighSchoolConfirmation}}
+  {{delete-high-school highSchool = currentHighSchool showWindow = showDeleteHighSchoolConfirmation}}
+{{else if showDeleteHighSchoolSubjectConfirmation}}
+  {{delete-high-school-subject highSchoolSubject = currentHighSchoolSubject showWindow = showDeleteHighSchoolSubjectConfirmation}}
+{{else if showDeleteTermCodeConfirmation}}
+  {{delete-term-code termCode = currentTermCode showWindow = showDeleteTermCodeConfirmation}}
+{{else if showDeleteCourseGroupingConfirmation}}
+  {{delete-course-grouping courseGrouping = currentCourseGrouping showWindow = showDeleteCourseGroupingConfirmation}}
+{{else if showAddCoursesModal}}
+  {{add-new-course-grouping courseGroup=currentCourseGrouping showWindow = showAddCoursesModal}}
+{{else if }}
+
+{{/if}}
+
+  <!-- Show data entry form -->
+<div class = "ui grid" style = "margin:0">
+    <div class = "sixteen wide column" style="padding-bottom:0">
+        <div class = "ui secondary pointing fluid ten item menu">
+            <div style="cursor: pointer;" class="active item" data-tab="Genders">Gender</div>
+            <div style="cursor: pointer;" class="item" data-tab="Residencies">Residency</div>
+            <div style="cursor: pointer;" class="item" data-tab="TermCodes">Term Codes</div>
+            <div style="cursor: pointer;" class="item" data-tab="CourseCodes">Course Codes</div>
+            <div style="cursor: pointer;" class="item" data-tab="CourseGroupings">Course Groupings</div>
+            <div style="cursor: pointer;" class="item" data-tab="HighSchools">High Schools</div>
+            <div style="cursor: pointer;" class="item" data-tab="HighSchoolSubjects">High School Subjects</div>
+            <div style="cursor: pointer;" class="item" data-tab="Faculties">Faculties</div>
+            <div style="cursor: pointer;" class="item" data-tab="Departments">Departments</div>
+            <div style="cursor: pointer;" class="item" data-tab="ProgramAdmins">Faculty Administrators</div>
+        </div>
+    </div>
+</div>
+
+  <div class="ui tab segment active" data-tab="Genders">
+    <table class="ui fixed table">
+        <thead>
+        <tr>
+            <th class="eight wide">Gender Name</th>
+            <th class="eight wide"><!--spacer--></th>
+        </tr>
+        </thead>
+        {{#if (inline-compare genderModel.length '==' 0)}}
+            <tr style = "height:100px">
+            <td colspan = "2" class = "middle aligned">
+            <div class = "dimmable">
+              <div class = "ui active inverted dimmer">
+                <div class = "ui text">No Genders Found</div>
+              </div>
+            </div>
+            </td>
+        </tr>
+        {{else if (inline-compare genderModel.length '>' 0)}}
+            {{#each genderModel as |gender|}}
+            <tr>
+                <td>
+                    <div class="ui fluid input">
+                        {{input type="text" value = gender.name}}
+                    </div>
+                </td>
+                <td>
+                    <div class="ui inverted buttons">
+                        <button class="ui cstmLBlue inverted button" {{action "saveGender" gender}}>Save
+                            &nbsp; <i class="save icon"></i>
+                        </button>
+                        <div class="divider"/>
+                        <button class="ui red inverted button" {{action "deleteGender" gender}}>Delete
+                            &nbsp; <i class="trash icon"></i>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            {{/each}}
+        {{else}}
+            <tr style = "height:100px">
+                <td colspan = "2" class = "middle aligned">
+                <div class = "dimmable">
+                  <div class = "ui active inverted dimmer">
+                    <div class = "ui text loader">Loading Genders...</div>
+                  </div>
+                </div>
+                </td>
+            </tr>
+        {{/if}}
+        <tr>
+            <td>
+                <div class="ui fluid input">
+                    {{input type="text" value = newGenderName placeholder="Gender Name"}}
+                </div>
+            </td>
+            <td>
+                <button class="ui inverted green button" {{action "addGender"}}> 
+                Add &nbsp; <i class="add square icon"></i>
+                </button>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div>
+			        <label>{{{genderOutput}}}</label>
+		        </div>
+            </td>
+        </tr>
+    </table>
+  </div>
+
+  <div class="ui tab segment" data-tab="Residencies">
+      <table class="ui fixed table">
+        <thead>
+            <tr>
+            <th class="eight wide">Residency Name</th>
+            <th class="eight wide"><!--spacer--></th>
+            </tr>
+        </thead>
+        {{#if (inline-compare residencyModel.length '==' 0)}}
+            <tr style = "height:100px">
+            <td colspan = "2" class = "middle aligned">
+            <div class = "dimmable">
+              <div class = "ui active inverted dimmer">
+                <div class = "ui text">No Residencies Found</div>
+              </div>
+            </div>
+            </td>
+        </tr>
+        {{else if (inline-compare residencyModel.length '>' 0)}}
+        {{#each residencyModel as |residency|}}
+        <tr>
+            <td>
+                <div class="ui fluid input">
+                    {{input type="text" value = residency.name}}
+                </div>
+            </td>
+            <td>
+                <div class="ui inverted buttons">
+                    <button class="ui cstmLBlue inverted button" {{action "saveResidency" residency}}>Save
+                        &nbsp; <i class="save icon"></i>
+                    </button>
+                    <div class="divider"/>
+                    <button class="ui red inverted button" {{action "deleteResidency" residency}}>Delete
+                        &nbsp; <i class="trash icon"></i>
+                    </button>
+                </div>
+            </td>
+        </tr>
+        {{/each}}
+        {{else}}
+            <tr style = "height:100px">
+                <td colspan = "2" class = "middle aligned">
+                <div class = "dimmable">
+                  <div class = "ui active inverted dimmer">
+                    <div class = "ui text loader">Loading Residencies...</div>
+                  </div>
+                </div>
+                </td>
+            </tr>
+        {{/if}}
+        <tr>
+            <td>
+                <div class="ui fluid input">
+                    {{input type="text" value = newResidencyName placeholder = "Residency Name"}}
+                </div>
+            </td>
+            <td>
+                <button class="ui inverted green button" {{action "addResidency"}}> 
+                Add &nbsp; <i class="add square icon"></i>
+                </button>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div>
+			        <label>{{{residencyOutput}}}</label>
+		        </div>
+            </td>
+        </tr>
+        </table>
+  </div>
+
+<div class="ui tab segment" data-tab="CourseCodes">
+    <table class="ui table">
+        <thead>
+            <tr>
+            <th class="two wide">Course Letter</th>
+            <th class="three wide">Course Number</th>
+            <th class="five wide">Course Name</th>
+            <th class="two wide">Course Unit</th>
+            <th class="four wide"><!--spacer--></th>
+            </tr>
+        </thead>
+        {{#if (inline-compare courseCodeRecords.length '==' 0)}}
+            <tr style = "height:100px">
+            <td colspan = "5" class = "middle aligned">
+            <div class = "dimmable">
+              <div class = "ui active inverted dimmer">
+                <div class = "ui text">No Course Codes Found</div>
+              </div>
+            </div>
+            </td>
+        </tr>
+        {{else if (inline-compare courseCodeRecords.length '>' 0)}}
+        {{#each courseCodeRecords as |courseCode|}}
+        <tr>
+            <td>
+                <div class="ui fluid input">
+                    {{input type="text" value = courseCode.courseLetter}}
+                </div>
+            </td>
+
+            <td>
+                <div class="ui fluid input">
+                    {{input type="text" value = courseCode.courseNumber}}
+                </div>
+            </td>
+
+            <td>
+                <div class="ui fluid input">
+                    {{input type="text" value = courseCode.name}}
+                </div>
+            </td>
+
+            <td>
+                <div class="ui fluid input">
+                    {{input type="text" value = courseCode.unit}}
+                </div>
+            </td>
+
+            <td>
+                <div class="ui inverted buttons">
+                    <button class="ui cstmLBlue inverted button" {{action "saveCourseCode" courseCode}}>Save
+                        &nbsp; <i class="save icon"></i>
+                    </button>
+                    <div class="divider"/>
+                    <button class="ui red inverted button" {{action "deleteCourseCode" courseCode}}>Delete
+                        &nbsp; <i class="trash icon"></i>
+                    </button>
+                </div>
+            </td>
+        </tr>
+        {{/each}}
+        {{else}}
+            <tr style = "height:100px">
+                <td colspan = "5" class = "middle aligned">
+                <div class = "dimmable">
+                  <div class = "ui active inverted dimmer">
+                    <div class = "ui text loader">Loading Course Codes...</div>
+                  </div>
+                </div>
+                </td>
+            </tr>
+        {{/if}}
+        <tr>
+            <td>
+                <div class="ui fluid input">
+                    {{input type="text" value = newCourseCodeCourseLetter placeholder="Course Letter"}}
+                </div>
+            </td>
+    
+            <td>
+                <div class="ui fluid input">
+                    {{input type="text" value = newCourseCodeCourseNumber placeholder="Course Number"}}
+                </div>
+            </td>
+
+
+            <td>
+                <div class="ui fluid input">
+                    {{input type="text" value = newCourseCodeName placeholder="Course Name"}}
+                </div>
+            </td>
+                
+            <td> 
+                <div class="ui fluid input">
+                    {{input type="text" value = newCourseCodeUnit placeholder="Course Unit"}}
+                </div>
+            </td>
+
+            <td>
+                <button class="ui inverted green button" {{action "addCourseCode"}}> 
+                Add &nbsp; <i class="add square icon"></i>
+                </button>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="12">
+                <div style="margin: auto; width: 50%;">
+                  <div class="ui fluid pagination nine item menu">
+                    {{#if (inline-compare courseCodePageNumber '<' 5)}}
+                      <div class="disabled item"></div>
+                    {{/if}}
+                    {{#if (inline-compare courseCodePageNumber '>' 3)}}
+                      <a class="item" {{action "switchCourseCodePage" 1}}>
+                        1
+                      </a> 
+                    {{else}}
+                      <div class="disabled item"></div>
+                    {{/if}} 
+                    {{#if (inline-compare courseCodePageNumber '>' 5)}}
+                      <div class="disabled item">
+                        ...
+                      </div>
+                    {{else}} 
+                      {{#if (inline-compare courseCodePageNumber '===' 5)}}
+                      <a class="item" {{action "switchCourseCodePage" 2}}>
+                        2
+                      </a> 
+                      {{/if}} 
+                    {{/if}}
+                    {{#if (inline-compare courseCodePageNumber '>' 2)}}
+                      <a class="item" {{action "switchCourseCodePage" (inline-math courseCodePageNumber '-' 2)}}>
+                        {{inline-math courseCodePageNumber '-' 2}}
+                      </a> 
+                    {{else}}
+                      <div class="disabled item"></div>
+                    {{/if}}
+                    {{#if (inline-compare courseCodePageNumber '>' 1)}}
+                      <a class="item" {{action "switchCourseCodePage" (inline-math courseCodePageNumber '-' 1)}}>
+                        {{inline-math courseCodePageNumber '-' 1}}
+                      </a>
+                    {{else}}
+                      <div class="disabled item"></div>
+                    {{/if}}
+
+                    <a class="active item">
+                      {{courseCodePageNumber}}
+                    </a> 
+
+                    {{#if (inline-compare courseCodePageNumber '<' totalCourseCodePages)}}
+                      <a class="item" {{action "switchCourseCodePage" (inline-math courseCodePageNumber '+ ' 1)}}>
+                        {{inline-math courseCodePageNumber '+ ' 1}}
+                      </a>
+                    {{else}}
+                      <div class="disabled item"></div>
+                    {{/if}}
+                    {{#if (inline-compare courseCodePageNumber '<' (inline-math totalCourseCodePages '- ' 1))}}
+                      <a class="item" {{action "switchCourseCodePage" (inline-math courseCodePageNumber '+ ' 2)}}>
+                        {{inline-math courseCodePageNumber '+ ' 2}}
+                      </a>
+                    {{else}}
+                      <div class="disabled item"></div>
+                    {{/if}}
+                    {{#if (inline-compare courseCodePageNumber '<' (inline-math totalCourseCodePages '- ' 4))}}
+                      <div class="disabled item">
+                        ...
+                      </div>
+                    {{else}}
+                      {{#if (inline-compare courseCodePageNumber '===' (inline-math totalCourseCodePages ' - ' 4))}}
+                        <a class="item" {{action "switchCourseCodePage" (inline-math totalCourseCodePages '- ' 1 )}}>
+                          {{inline-math totalCourseCodePages '- ' 1 }}
+                        </a>
+                      {{/if}}
+                    {{/if}}
+                    {{#if (inline-compare courseCodePageNumber '<' (inline-math totalCourseCodePages '- ' 2))}}
+                      <a class="item" {{action "switchCourseCodePage" totalCourseCodePages}}>
+                        {{totalCourseCodePages}}
+                      </a>
+                    {{else}}
+                      <div class="disabled item"></div>
+                    {{/if}}
+                    {{#if (inline-compare courseCodePageNumber '>' (inline-math totalCourseCodePages '-' 4))}}
+                        <div class="disabled item"></div>
+                    {{/if}}
+                  </div>
+                </div>
+            </td>
+        </tr>    
+    </table>
+ </div>
+
+ <div class="ui tab segment" data-tab="HighSchools">
+     <table class="ui table">
+        <thead>
+            <tr>
+            <th class="eight wide">High School Name</th>
+            <th class="eight wide"><!--spacer--></th>
+            </tr>
+        </thead>
+        {{#if (inline-compare highSchoolRecords.length '==' 0)}}
+            <tr style = "height:100px">
+            <td colspan = "2" class = "middle aligned">
+            <div class = "dimmable">
+              <div class = "ui active inverted dimmer">
+                <div class = "ui text">No High Schools Found</div>
+              </div>
+            </div>
+            </td>
+        </tr>
+        {{else if (inline-compare highSchoolRecords.length '>' 0)}}
+        {{#each highSchoolRecords as |highSchool|}}
+        <tr>
+            <td>
+                <div class="ui fluid input">
+                    {{input type="text" value = highSchool.schoolName}}
+                </div>
+            </td>
+
+            <td>
+                <div class="ui inverted buttons">
+                    <button class="ui cstmLBlue inverted button" {{action "saveHighSchool" highSchool}}>Save
+                        &nbsp; <i class="save icon"></i>
+                    </button>
+                    <div class="divider"/>
+                    <button class="ui red inverted button" {{action "deleteHighSchool" highSchool}}>Delete
+                        &nbsp; <i class="trash icon"></i>
+                    </button>
+                </div>
+            </td>
+        </tr>
+        {{/each}}
+        {{else}}
+            <tr style = "height:100px">
+                <td colspan = "2" class = "middle aligned">
+                <div class = "dimmable">
+                  <div class = "ui active inverted dimmer">
+                    <div class = "ui text loader">Loading High Schools...</div>
+                  </div>
+                </div>
+                </td>
+            </tr>
+        {{/if}}
+        <tr>
+             <td>
+                <div class="ui fluid input">
+                    {{input type="text" value = newHighSchoolName placeholder = "High School Name"}}
+                </div>
+            </td>
+
+            <td>
+                <button class="ui inverted green button" {{action "addHighSchool"}}> 
+                Add &nbsp; <i class="add square icon"></i>
+                </button>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div>
+			        <label>{{{highSchoolOutput}}}</label>
+		        </div>
+            </td>
+        </tr>
+
+         <tr>
+            <td colspan="12">
+                <div style="margin: auto; width: 50%;">
+                  <div class="ui fluid pagination nine item menu">
+                    {{#if (inline-compare highSchoolPageNumber '<' 5)}}
+                      <div class="disabled item"></div>
+                    {{/if}}
+                    {{#if (inline-compare highSchoolPageNumber '>' 3)}}
+                      <a class="item" {{action "switchHighSchoolPage" 1}}>
+                        1
+                      </a> 
+                    {{else}}
+                      <div class="disabled item"></div>
+                    {{/if}} 
+                    {{#if (inline-compare highSchoolPageNumber '>' 5)}}
+                      <div class="disabled item">
+                        ...
+                      </div>
+                    {{else}} 
+                      {{#if (inline-compare highSchoolPageNumber '===' 5)}}
+                      <a class="item" {{action "switchHighSchoolPage" 2}}>
+                        2
+                      </a> 
+                      {{/if}} 
+                    {{/if}}
+                    {{#if (inline-compare highSchoolPageNumber '>' 2)}}
+                      <a class="item" {{action "switchHighSchoolPage" (inline-math highSchoolPageNumber '-' 2)}}>
+                        {{inline-math highSchoolPageNumber '-' 2}}
+                      </a> 
+                    {{else}}
+                      <div class="disabled item"></div>
+                    {{/if}}
+                    {{#if (inline-compare highSchoolPageNumber '>' 1)}}
+                      <a class="item" {{action "switchHighSchoolPage" (inline-math highSchoolPageNumber '-' 1)}}>
+                        {{inline-math highSchoolPageNumber '-' 1}}
+                      </a>
+                    {{else}}
+                      <div class="disabled item"></div>
+                    {{/if}}
+
+                    <a class="active item">
+                      {{highSchoolPageNumber}}
+                    </a> 
+
+                    {{#if (inline-compare highSchoolPageNumber '<' totalHighSchoolPages)}}
+                      <a class="item" {{action "switchHighSchoolPage" (inline-math highSchoolPageNumber '+ ' 1)}}>
+                        {{inline-math highSchoolPageNumber '+ ' 1}}
+                      </a>
+                    {{else}}
+                      <div class="disabled item"></div>
+                    {{/if}}
+                    {{#if (inline-compare highSchoolPageNumber '<' (inline-math totalHighSchoolPages '- ' 1))}}
+                      <a class="item" {{action "switchHighSchoolPage" (inline-math highSchoolPageNumber '+ ' 2)}}>
+                        {{inline-math highSchoolPageNumber '+ ' 2}}
+                      </a>
+                    {{else}}
+                      <div class="disabled item"></div>
+                    {{/if}}
+                    {{#if (inline-compare highSchoolPageNumber '<' (inline-math totalHighSchoolPages '- ' 4))}}
+                      <div class="disabled item">
+                        ...
+                      </div>
+                    {{else}}
+                      {{#if (inline-compare highSchoolPageNumber '===' (inline-math totalHighSchoolPages ' - ' 4))}}
+                        <a class="item" {{action "switchHighSchoolPage" (inline-math totalHighSchoolPages '- ' 1 )}}>
+                          {{inline-math totalHighSchoolPages '- ' 1 }}
+                        </a>
+                      {{/if}}
+                    {{/if}}
+                    {{#if (inline-compare highSchoolPageNumber '<' (inline-math totalHighSchoolPages '- ' 2))}}
+                      <a class="item" {{action "switchHighSchoolPage" totalHighSchoolPages}}>
+                        {{totalHighSchoolPages}}
+                      </a>
+                    {{else}}
+                      <div class="disabled item"></div>
+                    {{/if}}
+                    {{#if (inline-compare highSchoolPageNumber '>' (inline-math totalHighSchoolPages '-' 4))}}
+                        <div class="disabled item"></div>
+                    {{/if}}
+                  </div>
+                </div>
+            </td>
+        </tr> 
+    </table>
+</div>
+
+<div class="ui tab segment" data-tab="HighSchoolSubjects">
+     <table class="ui table">
+        <thead>
+          <th class="four wide">Subject Name</th>
+          <th class="four wide">Subject Description</th>
+          <th class="two wide"><!--spacer--></th>
+        </thead>
+        {{#if (inline-compare highSchoolSubjectRecords.length '==' 0)}}
+            <tr style = "height:100px">
+            <td colspan = "3" class = "middle aligned">
+            <div class = "dimmable">
+              <div class = "ui active inverted dimmer">
+                <div class = "ui text">No High School Subjects Found</div>
+              </div>
+            </div>
+            </td>
+        </tr>
+        {{else if (inline-compare highSchoolSubjectRecords.length '>' 0)}}
+        {{#each highSchoolSubjectRecords as |highSchoolSubject|}}
+        <tr>
+
+            <td>
+                <div class="ui fluid input">
+                    {{input type="text" value = highSchoolSubject.name}}
+                </div>
+            </td>
+
+            <td>
+                <div class="ui fluid input">
+                  {{input type="text" value = highSchoolSubject.description}}
+                </div>
+            </td>
+            <td>
+                <div class="ui inverted buttons">
+                    <button class="ui cstmLBlue inverted button" {{action "saveHighSchoolSubject" highSchoolSubject}}>Save
+                        &nbsp; <i class="save icon"></i>
+                    </button>
+                    <div class="divider"/>
+                    <button class="ui red inverted button" {{action "deleteHighSchoolSubject" highSchoolSubject}}>Delete
+                        &nbsp; <i class="trash icon"></i>
+                    </button>
+                </div>
+            </td>
+        </tr> 
+        {{/each}}
+        {{else}}
+            <tr style = "height:100px">
+                <td colspan = "3" class = "middle aligned">
+                <div class = "dimmable">
+                  <div class = "ui active inverted dimmer">
+                    <div class = "ui text loader">Loading High School Subjects...</div>
+                  </div>
+                </div>
+                </td>
+            </tr>
+        {{/if}}
+        <tr>
+             <td>
+                <div class="ui fluid input">
+                    {{input type="text" value = newHighSchoolSubjectName placeholder= "Subject Name"}}
+                </div>
+            </td>
+
+            <td>
+                <div class="ui fluid input">
+                  {{input type="text" value = newHighSchoolSubjectDescriptionName placeholder= "Subject Description"}}
+                </div>
+            </td>
+
+            <td>
+                <button class="ui inverted green button" {{action "addHighSchoolSubject"}}> 
+                Add &nbsp; <i class="add square icon"></i>
+                </button>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="3">
+                <div>
+			        <label>{{{highSchoolCourseOutput}}}</label>
+		        </div>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="12">
+                <div style="margin: auto; width: 50%;">
+                  <div class="ui fluid pagination nine item menu">
+                    {{#if (inline-compare highSchoolSubjectPageNumber '<' 5)}}
+                      <div class="disabled item"></div>
+                    {{/if}}
+                    {{#if (inline-compare highSchoolSubjectPageNumber '>' 3)}}
+                      <a class="item" {{action "switchHighSchoolSubjectPage" 1}}>
+                        1
+                      </a> 
+                    {{else}}
+                      <div class="disabled item"></div>
+                    {{/if}} 
+                    {{#if (inline-compare highSchoolSubjectPageNumber '>' 5)}}
+                      <div class="disabled item">
+                        ...
+                      </div>
+                    {{else}} 
+                      {{#if (inline-compare highSchoolSubjectPageNumber '===' 5)}}
+                      <a class="item" {{action "switchHighSchoolSubjectPage" 2}}>
+                        2
+                      </a> 
+                      {{/if}} 
+                    {{/if}}
+                    {{#if (inline-compare highSchoolSubjectPageNumber '>' 2)}}
+                      <a class="item" {{action "switchHighSchoolSubjectPage" (inline-math highSchoolSubjectPageNumber '-' 2)}}>
+                        {{inline-math highSchoolSubjectPageNumber '-' 2}}
+                      </a> 
+                    {{else}}
+                      <div class="disabled item"></div>
+                    {{/if}}
+                    {{#if (inline-compare highSchoolSubjectPageNumber '>' 1)}}
+                      <a class="item" {{action "switchHighSchoolSubjectPage" (inline-math highSchoolSubjectPageNumber '-' 1)}}>
+                        {{inline-math highSchoolSubjectPageNumber '-' 1}}
+                      </a>
+                    {{else}}
+                      <div class="disabled item"></div>
+                    {{/if}}
+
+                    <a class="active item">
+                      {{highSchoolSubjectPageNumber}}
+                    </a> 
+
+                    {{#if (inline-compare highSchoolSubjectPageNumber '<' totalHighSchoolSubjectPages)}}
+                      <a class="item" {{action "switchHighSchoolSubjectPage" (inline-math highSchoolSubjectPageNumber '+ ' 1)}}>
+                        {{inline-math highSchoolSubjectPageNumber '+ ' 1}}
+                      </a>
+                    {{else}}
+                      <div class="disabled item"></div>
+                    {{/if}}
+                    {{#if (inline-compare highSchoolSubjectPageNumber '<' (inline-math totalHighSchoolSubjectPages '- ' 1))}}
+                      <a class="item" {{action "switchHighSchoolSubjectPage" (inline-math highSchoolSubjectPageNumber '+ ' 2)}}>
+                        {{inline-math highSchoolSubjectPageNumber '+ ' 2}}
+                      </a>
+                    {{else}}
+                      <div class="disabled item"></div>
+                    {{/if}}
+                    {{#if (inline-compare highSchoolSubjectPageNumber '<' (inline-math totalHighSchoolSubjectPages '- ' 4))}}
+                      <div class="disabled item">
+                        ...
+                      </div>
+                    {{else}}
+                      {{#if (inline-compare highSchoolSubjectPageNumber '===' (inline-math totalHighSchoolSubjectPages ' - ' 4))}}
+                        <a class="item" {{action "switchHighSchoolSubjectPage" (inline-math totalHighSchoolSubjectPages '- ' 1 )}}>
+                          {{inline-math totalHighSchoolSubjectPages '- ' 1 }}
+                        </a>
+                      {{/if}}
+                    {{/if}}
+                    {{#if (inline-compare highSchoolSubjectPageNumber '<' (inline-math totalHighSchoolSubjectPages '- ' 2))}}
+                      <a class="item" {{action "switchHighSchoolSubjectPage" totalHighSchoolSubjectPages}}>
+                        {{totalHighSchoolSubjectPages}}
+                      </a>
+                    {{else}}
+                      <div class="disabled item"></div>
+                    {{/if}}
+                    {{#if (inline-compare highSchoolSubjectPageNumber '>' (inline-math totalHighSchoolSubjectPages '-' 4))}}
+                        <div class="disabled item"></div>
+                    {{/if}}
+                  </div>
+                </div>
+            </td>
+        </tr> 
+    </table>
+</div>
+
+<div class="ui tab segment" data-tab="TermCodes">
+     <table class="ui table">
+        <thead>
+            <tr>
+            <th class="eight wide">Term Codes</th>
+            <th class="eight wide"><!--spacer--></th>
+            </tr>
+        </thead>
+        {{#if (inline-compare termCodeRecords.length '==' 0)}}
+            <tr style = "height:100px">
+            <td colspan = "2" class = "middle aligned">
+            <div class = "dimmable">
+              <div class = "ui active inverted dimmer">
+                <div class = "ui text">No Term Codes Found</div>
+              </div>
+            </div>
+            </td>
+        </tr>
+        {{else if (inline-compare termCodeRecords.length '>' 0)}}
+        {{#each termCodeRecords as |termCode|}}
+          <tr>  
+            <td>
+                <div class="ui fluid input">
+                    {{input type="text" value = termCode.name}}
+                </div>
+            </td>
+
+            <td>
+                <div class="ui inverted buttons">
+                    <button class="ui cstmLBlue inverted button" {{action "saveTermCode" termCode}}>Save
+                        &nbsp; <i class="save icon"></i>
+                    </button>
+                    <div class="divider"/>
+                    <button class="ui red inverted button" {{action "deleteTermCode" termCode}}>Delete
+                        &nbsp; <i class="trash icon"></i>
+                    </button>
+                </div>
+            </td>
+        </tr>
+        {{/each}}
+        {{else}}
+            <tr style = "height:100px">
+                <td colspan = "2" class = "middle aligned">
+                <div class = "dimmable">
+                  <div class = "ui active inverted dimmer">
+                    <div class = "ui text loader">Loading Term Codes...</div>
+                  </div>
+                </div>
+                </td>
+            </tr>
+        {{/if}}
+        <tr>
+             <td>
+                <div class="ui fluid input">
+                    {{input type="text" value = newTermCodeName placeholder = "Term Code Name"}}
+                </div>
+            </td>
+
+            <td>
+                <button class="ui inverted green button" {{action "addTermCode"}}> 
+                Add &nbsp; <i class="add square icon"></i>
+                </button>
+            </td>
+        </tr>
+        <tr>
+            <td colspan = "2">
+                <div>
+			        <label>{{{termCodeOutput}}}</label>
+		        </div>
+            </td>
+        </tr>
+
+         <tr>
+            <td colspan="12">
+                <div style="margin: auto; width: 50%;">
+                  <div class="ui fluid pagination nine item menu">
+                    {{#if (inline-compare termCodePageNumber '<' 5)}}
+                      <div class="disabled item"></div>
+                    {{/if}}
+                    {{#if (inline-compare termCodePageNumber '>' 3)}}
+                      <a class="item" {{action "switchTermCodePage" 1}}>
+                        1
+                      </a> 
+                    {{else}}
+                      <div class="disabled item"></div>
+                    {{/if}} 
+                    {{#if (inline-compare termCodePageNumber '>' 5)}}
+                      <div class="disabled item">
+                        ...
+                      </div>
+                    {{else}} 
+                      {{#if (inline-compare termCodePageNumber '===' 5)}}
+                      <a class="item" {{action "switchTermCodePage" 2}}>
+                        2
+                      </a> 
+                      {{/if}} 
+                    {{/if}}
+                    {{#if (inline-compare termCodePageNumber '>' 2)}}
+                      <a class="item" {{action "switchTermCodePage" (inline-math termCodePageNumber '-' 2)}}>
+                        {{inline-math termCodePageNumber '-' 2}}
+                      </a> 
+                    {{else}}
+                      <div class="disabled item"></div>
+                    {{/if}}
+                    {{#if (inline-compare termCodePageNumber '>' 1)}}
+                      <a class="item" {{action "switchTermCodePage" (inline-math termCodePageNumber '-' 1)}}>
+                        {{inline-math termCodePageNumber '-' 1}}
+                      </a>
+                    {{else}}
+                      <div class="disabled item"></div>
+                    {{/if}}
+
+                    <a class="active item">
+                      {{termCodePageNumber}}
+                    </a> 
+
+                    {{#if (inline-compare termCodePageNumber '<' totalTermCodePages)}}
+                      <a class="item" {{action "switchTermCodePage" (inline-math termCodePageNumber '+ ' 1)}}>
+                        {{inline-math termCodePageNumber '+ ' 1}}
+                      </a>
+                    {{else}}
+                      <div class="disabled item"></div>
+                    {{/if}}
+                    {{#if (inline-compare termCodePageNumber '<' (inline-math totalTermCodePages '- ' 1))}}
+                      <a class="item" {{action "switchTermCodePage" (inline-math termCodePageNumber '+ ' 2)}}>
+                        {{inline-math termCodePageNumber '+ ' 2}}
+                      </a>
+                    {{else}}
+                      <div class="disabled item"></div>
+                    {{/if}}
+                    {{#if (inline-compare termCodePageNumber '<' (inline-math totalTermCodePages '- ' 4))}}
+                      <div class="disabled item">
+                        ...
+                      </div>
+                    {{else}}
+                      {{#if (inline-compare termCodePageNumber '===' (inline-math totalTermCodePages ' - ' 4))}}
+                        <a class="item" {{action "switchTermCodePage" (inline-math totalTermCodePages '- ' 1 )}}>
+                          {{inline-math totalTermCodePages '- ' 1 }}
+                        </a>
+                      {{/if}}
+                    {{/if}}
+                    {{#if (inline-compare termCodePageNumber '<' (inline-math totalTermCodePages '- ' 2))}}
+                      <a class="item" {{action "switchTermCodePage" totalTermCodePages}}>
+                        {{totalTermCodePages}}
+                      </a>
+                    {{else}}
+                      <div class="disabled item"></div>
+                    {{/if}}
+                    {{#if (inline-compare termCodePageNumber '>' (inline-math totalTermCodePages '-' 4))}}
+                        <div class="disabled item"></div>
+                    {{/if}}
+                  </div>
+                </div>
+            </td>
+        </tr> 
+
+    </table>
+</div>
+
+<div class="ui tab segment" data-tab="CourseGroupings">
+    <table class="ui table">
+        <thead>
+            <tr>
+                <th class="six wide">Grouping Name</th>
+                <th class="ten wide"><!--spacer--></th>
+            </tr>
+        </thead>
+        {{#if (inline-compare courseGroupingModel.length '==' 0)}}
+        <tr style = "height:100px">
+            <td colspan = "2" class = "middle aligned">
+            <div class = "dimmable">
+              <div class = "ui active inverted dimmer">
+                <div class = "ui text">No Course Groupings Found</div>
+              </div>
+            </div>
+            </td>
+        </tr>
+        {{else if (inline-compare courseGroupingModel.length '>' 0)}}
+        {{#each courseGroupingModel as |courseGrouping|}}
+         <tr>   
+            <td>
+                <div class="ui fluid input">
+                    {{input type="text" value = courseGrouping.name}}
+                </div>
+           </td>
+
+            <td>
+                <div class="ui inverted buttons">
+                    <button class="ui inverted cstmDPurple button" {{action "saveName" courseGrouping}}>Save Name
+                        &nbsp; <i class="save icon"></i>
+                    </button>
+                    <div class="divider"/>
+                    <button class="ui inverted cstmLBlue button" {{action "modifyCourses" courseGrouping}}>Modify Courses
+                        &nbsp; <i class="add square icon"></i>
+                    </button>
+                    <div class="divider"/>
+                    <button class="ui inverted red button" {{action "deleteCourseGrouping" courseGrouping}}> Delete Grouping
+                        &nbsp; <i class="trash icon"></i>
+                    </button>
+                </div>
+            </td>
+        </tr>
+        {{/each}}
+        {{else}}
+            <tr style = "height:100px">
+                <td colspan = "2" class = "middle aligned">
+                <div class = "dimmable">
+                  <div class = "ui active inverted dimmer">
+                    <div class = "ui text loader">Loading Course Groupings...</div>
+                  </div>
+                </div>
+                </td>
+            </tr>
+        {{/if}}
+        <tr>
+            <td>
+                <div class = "ui fluid input">
+                    {{input type="text" value = newCourseGroupingName placeholder = "Grouping Name"}}
+                </div>
+            </td>
+            <td>
+                <button class="ui inverted green button" {{action "addCourseGrouping"}}> 
+                Add &nbsp; <i class="add square icon"></i>
+                </button>
+            </td>
+        </tr>
+    </table>
+</div>
+<div class="ui tab segment" data-tab="Faculties">
+  <table class="ui table">
+    <thead>
+      <tr>
+        <th class="six wide">Faculty</th>
+        <th class="six wide"></th>
+      </tr>
+    </thead>
+    {{#each facultyModel as |faculty|}}
+      <tr>
+        <td><div class = "ui fluid input">{{input type="text" value = faculty.name}}</div></td>
+        <td>
+          <div class="ui inverted buttons">
+              <button class="ui cstmLBlue inverted button" {{action "saveFaculty" faculty}}>Save
+                  &nbsp; <i class="save icon"></i>
+              </button>
+              <div class="divider"/>
+              <button class="ui red inverted button" {{action "deleteFaculty" faculty}}>Delete
+                  &nbsp; <i class="trash icon"></i>
+              </button>
+          </div>
+        </td>
+      </tr>
+    {{/each}}
+    <tr>
+      <td><div class = "ui fluid input">{{input type="text" value = newFacultyName placeholder="Faculty Name"}}</div></td>
+      <td>
+          <div class="ui green inverted button" {{action "addFaculty"}}>Add New Faculty</div>
+      </td>
+    </tr>
+  </table>
+</div>
+<div class="ui tab segment" data-tab="Departments">
+  <table class="ui table">
+    <thead>
+      <tr>
+        <th class="six wide">Department</th>
+        <th class="six wide">Faculty</th>
+        <th class="four wide"></th>
+      </tr>
+    </thead>
+    {{#each departmentModel as |department index|}}
+      <tr>
+        <td><div class = "ui fluid input">{{input type="text" value = department.name}}</div></td>
+        <td>
+          <select id="facultyDDL{{index}}" class="ui dropdown" onchange={{action 'selectFaculty' department index}}>
+            {{#each facultyModel as |faculty|}}
+              <option class="ui item" value={{faculty.id}} selected={{eq department.faculty.id faculty.id}}>{{faculty.name}}</option>
+            {{/each}}
+          </select>
+        </td>
+        <td>
+          <div class="ui inverted buttons">
+              <button class="ui cstmLBlue inverted button" {{action "saveDepartment" department}}>Save
+                  &nbsp; <i class="save icon"></i>
+              </button>
+              <div class="divider"/>
+              <button class="ui red inverted button" {{action "deleteDepartment" department}}>Delete
+                  &nbsp; <i class="trash icon"></i>
+              </button>
+          </div>
+        </td>
+      </tr>
+    {{/each}}    
+    <tr>
+      <td><div class = "ui fluid input">{{input type="text" value = newDepartmentName placeholder="Department Name"}}</div></td>
+      <td>
+        <select id="newDeptFacultyDDL" class="ui dropdown">
+          {{#each facultyModel as |faculty|}}
+            <option class="ui item" value={{faculty.id}}>{{faculty.name}}</option>
+          {{/each}}
+        </select>
+      </td>
+      <td>
+          <div class="ui green inverted button" {{action "addDepartment"}}>Add New Department</div>
+      </td>
+    </tr>
+  </table>
+</div>
+<div class="ui tab segment" data-tab="ProgramAdmins">
+  <table class="ui table">
+    <thead>
+      <tr>
+        <th class="three wide">Name</th>
+        <th class="five wide">Position</th>
+        <th class="four wide">Department</th>
+        <th class="four wide"></th>
+      </tr>
+    </thead>
+      {{#each programAdminsModel as |admin index|}}
+        <tr>          
+          <td><div class = "ui fluid input">{{input type="text" value = admin.name}}</div></td>        
+          <td><div class = "ui fluid input">{{input type="text" value = admin.position}}</div></td>
+          <td>
+            <select id="departmentDDL{{index}}" class="ui dropdown" onchange={{action 'selectDepartment' admin index}}>
+              {{#each departmentModel as |department|}}
+                <option class="ui item" value={{department.id}} selected={{eq admin.department.id department.id}}>{{department.name}}</option>
+              {{/each}}
+            </select>
+          </td>          
+          <td>
+            <div class="ui inverted buttons">
+                <button class="ui cstmLBlue inverted button" {{action "saveAdmin" admin}}>Save
+                    &nbsp; <i class="save icon"></i>
+                </button>
+                <div class="divider"/>
+                <button class="ui red inverted button" {{action "deleteAdmin" admin}}>Delete
+                    &nbsp; <i class="trash icon"></i>
+                </button>
+            </div>
+          </td>
+        </tr>
+      {{/each}}
+      <tr>
+        <td><div class = "ui fluid input">{{input type="text" value = newAdminName placeholder="Administrator Name"}}</div></td>
+        <td><div class = "ui fluid input">{{input type="text" value = newAdminPosition placeholder="Position"}}</div></td>
+        <td>
+          <select id="newAdminDeptDDL" class="ui dropdown">
+            {{#each departmentModel as |department|}}
+              <option class="ui item" value={{department.id}}>{{department.name}}</option>
+            {{/each}}
+          </select>
+        </td>
+        <td>
+            <div class="ui green inverted button" {{action "addAdmin"}}>Add New Administrator</div>
+        </td>
+      </tr>
+  </table>
+</div>

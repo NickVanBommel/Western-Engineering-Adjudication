@@ -1,0 +1,254 @@
+/*For Footer*/
+html {
+  min-height: 100%;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+.wrapper {
+  min-width:100%;
+}
+
+body {
+  /*background-color: #ebebeb !important;*/
+  background-image: url('images/geometricCheckBG.png');
+  background-size: cover;
+  color: black !important;
+}
+
+body > .ember-view {
+  position: relative;
+  margin: 0;
+  min-height: 100%;
+}
+/**
+ * Footer Styles
+ */
+.footer {
+  position: absolute;  
+  padding-top: 25px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+/*end footer*/
+
+.ui.grid > [class*="three wide"].column {
+	padding-right: 0px !important;
+}
+.ui.grid > [class*="thirteen wide"].column {
+	padding-left: 0px !important;
+}
+
+.divider{
+    width:5px;
+    height:auto;
+    display:inline-block;
+}
+/*Home Page*/
+.ui.menu .item img.logo {
+    margin-right: 1.5em;
+}
+.ui.menu .item {
+  margin-left:1px;
+  margin-right:1px;
+}
+
+.appBody.ui.grid {
+	margin-top: 1px;
+}
+.appBody .content {
+  top: 0;
+}
+/*Welcome Page*/
+.appBody h1.ui.header {
+    margin-top: 1.5em;
+    margin-bottom: 0em;
+    font-size: 4em;
+    font-weight: normal;
+    text-align: center;
+}
+.appBody h2 {
+	text-align: center;
+}
+.ui.text.container {
+  min-height: 100%;
+}
+.ui.centered.grid.container {
+  height:auto;
+}
+.ui.button.animated {
+  min-height: 100%;
+}
+.ui.animated.button {
+  min-height:125px;
+}
+/*div>.welcome{
+	margin-bottom: 13em;
+}
+div>div>div> .ui.huge.button {
+	height: 100%;
+}*/
+
+/*IMPORT*/
+.ui .segment .step > .content {
+  max-width:600px;
+}
+
+/*About Us*/
+.headshot > img {
+    max-width:100%;
+    max-height:100%;
+}
+
+.headshot:hover {
+    box-shadow: 0px 0px 7px #00E5EE;
+}
+
+.column > h3 {
+    text-align: center;
+}
+
+.description {
+    margin: 10px;
+    min-height: 75px;
+}
+
+/*Login page*/
+.loginPage {
+  margin-top: 15%;
+}
+.loginPage .grid .form-holder {
+  background-color: white;
+  border-radius: 10px;
+  -webkit-box-shadow: 0px 7px 50px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 7px 50px 0px rgba(0,0,0,0.75);
+  box-shadow: 0px 7px 50px 0px rgba(0,0,0,0.75);
+}
+.loginPage .grid .form-holder form .form .field input {
+  background-color: rgba(186,219,250,0.2);
+}
+.login {
+  background-image: url('/assets/images/uwo-2.jpg');
+  background-size: cover;
+  padding: 0;
+}
+/*generate chart*/
+.hideChart{
+  display: none;
+}
+#open{
+  padding-bottom: 20px;
+}
+.cstmDPurple {
+  background-color: #4e2683 !important;
+  color: #FFFFFF !important;
+}
+.ui.cstmDPurple.button:hover {
+  background-color: #350D6A !important;
+  color: inherit;
+}
+.cstmLGrey {
+  background-color: #ebebeb !important;
+  color: #000000 !important;
+}
+.ui.cstmLGrey.button:hover {
+  background-color: #D2D2D2 !important;
+  color: inherit;
+}
+.cstmLOrange {
+  background-color: #faa600 !important;
+  color: #FFFFFF !important;
+}
+.ui.cstmLOrange.button:hover {
+  background-color: #E18D00 !important;
+  color: inherit;
+}
+.cstmLBlue {
+  background-color: #02bfc6 !important;
+  color: #FFFFFF !important;
+}
+.ui.cstmLBlue.button:hover {
+  background-color: #00A6AD !important;
+  color: inherit;
+}
+.cstmGold {
+  background-color: #cbbb9a !important;
+  color: #FFFFFF !important;
+}
+.ui.cstmGold.button:hover {
+  background-color: #B2A281 !important;
+  color: inherit;
+}
+.cstmTurq {
+  background-color: #00999f !important;
+  color: #FFFFFF !important;
+}
+.ui.cstmTurq.button:hover {
+  background-color: #008086 !important;
+  color: inherit;
+}
+.ui.inverted.cstmDPurple.button {
+  color: #4e2683 !important;
+  box-shadow: 0px 0px 0px 2px #4e2683 inset !important;
+  background-color: transparent !important;
+}
+.ui.inverted.cstmDPurple.button:hover{
+  background-color: #4e2683 !important;
+  color: #FFFFFF !important;
+}
+.ui.inverted.cstmLGrey.button {
+  color: #ebebeb !important;
+  box-shadow: 0px 0px 0px 2px #ebebeb inset !important;
+  background-color: transparent !important;
+}
+.ui.inverted.cstmLGrey.button:hover{
+  background-color: #ebebeb !important;
+  color: #000000 !important;
+}
+.ui.inverted.cstmLOrange.button {
+  color: #faa600 !important;
+  box-shadow: 0px 0px 0px 2px #faa600 inset !important;
+  background-color: transparent !important;
+}
+.ui.inverted.cstmLOrange.button:hover{
+  background-color: #faa600 !important;
+  color: #FFFFFF !important;
+}
+.ui.inverted.cstmLBlue.button {
+  color: #02bfc6 !important;
+  box-shadow: 0px 0px 0px 2px #02bfc6 inset !important;
+  background-color: transparent !important;
+}
+.ui.inverted.cstmLBlue.button:hover{
+  background-color: #02bfc6 !important;
+  color: #FFFFFF !important;
+}
+.ui.inverted.cstmGold.button {
+  color: #cbbb9a !important;
+  box-shadow: 0px 0px 0px 2px #cbbb9a inset !important;
+  background-color: transparent !important;
+}
+.ui.inverted.cstmGold.button:hover{
+  background-color: #cbbb9a !important;
+  color: #FFFFFF !important;
+}
+.ui.inverted.cstmTurq.button {
+  color: #00999f !important;
+  box-shadow: 0px 0px 0px 2px #00999f inset !important;
+  background-color: transparent !important;
+}
+.ui.inverted.cstmTurq.button:hover{
+  background-color: #00999f !important;
+  color: #FFFFFF !important;
+}
+/**Param builder**/
+.logicalExpressionPg > div > div > div > div > div > div > div > div > div > input[type="text"][readonly]{
+  pointer-events: none;
+  background-color: #4e2683;
+  color:#ffffff;
+}

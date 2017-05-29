@@ -1,0 +1,96 @@
+<div class="ui stackable container inverted six item menu">
+  <a class="item" {{action 'firstPage'}}>
+    <i class="step backward icon"></i>
+    First
+  </a>
+  <a class="item" {{action 'previousPage'}}>
+    <i class="arrow left icon"></i>
+    Previous
+  </a>
+  <a class="item" {{action 'nextPage'}}>
+    <i class="arrow right icon"></i>
+    Next
+  </a>
+  <a class="item" {{action 'lastPage'}}>
+    <i class="step forward icon"></i>
+    Last
+  </a>
+  <a class="item" {{action 'toggleShowFilters'}}>
+    <i class="search icon"></i>
+    {{#if showFilters}}
+      Hide Filters
+    {{else}}
+      Show Filters
+    {{/if}}
+  </a>
+  <a class = "item" {{action 'createStudent'}}>
+    <i class="add user icon"></i>
+    Add Student
+  </a>
+</div> 
+
+{{#if showAddStudent}}
+  {{add-student INDEX = currentIndex selectStudent = (action 'selectStudent') notDONE = showAddStudent total = totalStudents pageSize = limit totalPages = totalPages changeOffset = (action 'changeOffset')}}
+{{/if}}
+
+{{#if showFilters}}
+  <div class="ui form">
+    <div class="four fields">
+      <div class="field">
+        <label>Student Number</label>
+        <input id="studentNumber" placeholder="Student Number" type="number" min="0">
+      </div>
+      <div class="field">
+        <label>First Name
+          <span data-tooltip="This field accepts RegEx expressions." data-position="right center">
+            <i class="help circle icon"></i>
+          </span>
+        </label>
+        <input id="firstName" placeholder="First Name" type="text">
+      </div>
+      <div class="field">
+        <label>Last Name
+          <span data-tooltip="This field accepts RegEx expressions." data-position="right center">
+            <i class="help circle icon"></i>
+          </span>
+        </label>
+        <input id="lastName" placeholder="Last Name" type="text">
+      </div>
+      <div class="field">        
+        <br>        
+        <br>
+        {{ui-checkbox label = "Show only students flagged for review" checked = filterByFlaggedForReview onChange=(action (mut filterByFlaggedForReview))}}
+      </div>
+    </div>
+    <div class="ui cstmLBlue button" {{action "applyFilters"}}>Apply</div>
+    <div class="ui button" {{action "clearFilters"}}>Clear</div>
+  </div>
+{{/if}}
+
+<div style="min-height: 300px;">
+  {{#if (inline-compare studentsRecords.length '>' 0)}}
+    <div class="ui vertically padded grid">
+      {{#each studentsRecords as |student index|}}
+        <div class="eight wide column">
+          <div class="ui fluid labeled icon cstmTurq button" {{action "selectStudent" student index}}>
+            {{#each student.adjudications as |studentAdj|}}
+              {{#if studentAdj.assessmentCode.flagForReview}}
+                <i class="red icon flag"></i>
+              {{/if}}
+            {{/each}}
+            <img class="ui avatar image icon" src={{student.photo}}>
+            {{student.firstName}} {{student.lastName}}
+          </div>
+        </div>
+      {{/each}}
+    </div>
+  {{else}}
+    <div class = "dimmable" style="min-height:300px">
+      <div class = "ui active inverted dimmer">
+        <div class = "ui text loader">{{message}}</div>
+      </div>
+    </div>
+  {{/if}}
+</div>
+  
+  
